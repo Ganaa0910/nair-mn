@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Card nav initial states */
+.card-nav-content .nav-card {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@theme {
+    /* Font System */
+    --font-family-caveat: "Caveat", cursive;
+
+    /* Color System */
+
+    --color-blue: #57b7ff;
+    --color-cream: #fff7ed;
+    --color-brown: #472913;
+    --color-gold: #ba9a32;
+
+    --color-accent-primary: #f5ba31;
+    --color-accent-secondary: #ffd700;
+    --color-dark-primary: #0f1012;
+    --color-dark-secondary: #131416;
+    --color-dark-tertiary: #17181a;
+    --color-dark-quaternary: #1b1c1e;
+    --color-light-primary: #fafafa;
+    --color-light-secondary: #f2f2f2;
+    --color-light-tertiary: #ebebeb;
+    --color-light-quaternary: #e6e6e6;
+    --color-translucent-light-2: #ffffff05;
+    --color-translucent-light-4: #ffffff0a;
+    --color-translucent-light-8: #ffffff14;
+    --color-translucent-light-12: #ffffff1f;
+    --color-translucent-light-16: #ffffff29;
+    --color-translucent-light-24: #ffffff3d;
+    --color-translucent-light-32: #ffffff52;
+    --color-translucent-light-48: #ffffff7a;
+    --color-translucent-light-64: #ffffffa3;
+    --color-translucent-light-72: #ffffffb8;
+    --color-translucent-light-80: #ffffffcc;
+    --color-translucent-dark-2: #0f101205;
+    --color-translucent-dark-4: #0f10120a;
+    --color-translucent-dark-8: #0f101214;
+    --color-translucent-dark-12: #0f10121f;
+    --color-translucent-dark-16: #0f101229;
+    --color-translucent-dark-24: #0f10123d;
+    --color-translucent-dark-32: #0f101252;
+    --color-translucent-dark-48: #0f10127a;
+    --color-translucent-dark-64: #0f1012a3;
+    --color-translucent-dark-72: #0f1012b8;
+    --color-translucent-dark-80: #0f1012cc;
+    --color-system-success-primary: #2cb59e;
+    --color-system-success-secondary: #2cb59e52;
+    --color-system-success-tertiary: #2cb59e29;
+    --color-system-success-quaternary: #2cb59e14;
+    --color-system-error-primary: #ff5c69;
+    --color-system-error-secondary: #ff5c6952;
+    --color-system-error-tertiary: #ff5c6929;
+    --color-system-error-quaternary: #ff5c6914;
+}
