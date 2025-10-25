@@ -25,6 +25,7 @@ interface SilkUniforms {
   uColor: UniformValue<Color>;
   uRotation: UniformValue<number>;
   uTime: UniformValue<number>;
+  [uniform: string]: UniformValue<any>;
 }
 
 const vertexShader = `

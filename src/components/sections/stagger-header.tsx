@@ -521,7 +521,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   }, [playClose, animateIcon, animateColor, animateText, onMenuClose]);
 
   const handleItemClick = useCallback(
-    (link: string) => {
+    () => {
       // Close menu after a short delay to allow the click to register
       setTimeout(() => {
         closeMenu();
@@ -688,7 +688,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                       href={it.link}
                       aria-label={it.ariaLabel}
                       data-index={idx + 1}
-                      onClick={() => handleItemClick(it.link)}
+                      onClick={() => handleItemClick()}
                     >
                       <span className="sm-panel-itemLabel inline-block [transform-origin:50%_100%] will-change-transform">
                         {it.label}
