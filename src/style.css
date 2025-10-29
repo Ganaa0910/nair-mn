@@ -1,21 +1,16 @@
 @import "tailwindcss";
 
-/* Smooth scrolling behavior and hide scrollbar */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Hide scrollbar for webkit browsers */
+/* Hide scrollbar for webkit browsers (but preserve scrolling functionality) */
 ::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for Firefox */
+/* Hide scrollbar for Firefox (but preserve scrolling functionality) */
 html {
   scrollbar-width: none;
 }
 
-/* Hide scrollbar for IE and Edge */
+/* Hide scrollbar for IE and Edge (but preserve scrolling functionality) */
 body {
   -ms-overflow-style: none;
 }
@@ -24,6 +19,26 @@ body {
 .card-nav-content .nav-card {
   opacity: 0;
   transform: translateY(30px);
+}
+
+/* Mobile-first touch optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Smooth font rendering for mobile */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Better mobile viewport handling */
+@viewport {
+  width: device-width;
+  initial-scale: 1;
+  maximum-scale: 1;
+  user-scalable: no;
 }
 
 @theme {
