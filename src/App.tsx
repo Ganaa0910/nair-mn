@@ -5,9 +5,11 @@ import StaggeredMenu from "./components/sections/stagger-header.tsx";
 import logo from "/logo.jpg?url";
 import RotatingText from "./components/text/rotating-text.tsx";
 import CircularGallery from "./components/sections/circular-gallery.tsx";
-import SpotlightCard from "./components/SpotlightCard.tsx";
+// import SpotlightCard from "./components/SpotlightCard.tsx";
+import DomeGallery from "./components/sections/dome-gallery.tsx";
 
 import Ballpit from "./components/backgrounds/ball-pit.tsx";
+import ColorBends from "./components/backgrounds/light-bend.tsx";
 function App() {
   const menuItems = [
     {
@@ -21,62 +23,90 @@ function App() {
       link: "#art-performances",
     },
     { label: "Үйлчилгээ", ariaLabel: "Our services", link: "#services" },
-    {
-      label: "Уртын дуучид, Ерөөлчид",
-      ariaLabel: "Traditional singers",
-      link: "#traditional-singers",
-    },
     { label: "Контент", ariaLabel: "View content", link: "#content" },
-    { label: "Нийтлэл", ariaLabel: "Read articles", link: "#articles" },
+    { label: "Холбоо барих", ariaLabel: "Read articles", link: "#footer" },
   ];
 
-  const items = [
-    {
-      image: "/1.JPG",
-      title: "Уртын дуу",
-      subtitle: "Уламжлалт дуу",
-      handle: "Найр",
-      borderColor: "#ba9a32",
-      gradient: "linear-gradient(145deg, #ba9a32, #472913)",
-      url: "#traditional-singers",
-    },
-    {
-      image: "/2.JPG",
-      title: "Морин хуур",
-      subtitle: "Хөгжмийн зэмсэг",
-      handle: "Найр",
-      borderColor: "#472913",
-      gradient: "linear-gradient(180deg, #472913, #ba9a32)",
-      url: "#art-performances",
-    },
-    {
-      image: "/3.JPG",
-      title: "Бүжиг",
-      subtitle: "Уламжлалт бүжиг",
-      handle: "Найр",
-      borderColor: "#ba9a32",
-      gradient: "linear-gradient(225deg, #ba9a32, #472913)",
-      url: "#art-performances",
-    },
-    {
-      image: "/4.JPG",
-      title: "Хөтөлбөр",
-      subtitle: "Багц тоглолт",
-      handle: "Найр",
-      borderColor: "#472913",
-      gradient: "linear-gradient(315deg, #472913, #ba9a32)",
-      url: "#package-programs",
-    },
-  ];
+  // const items = [
+  //   {
+  //     image: "/1.JPG",
+  //     title: "Уртын дуу",
+  //     subtitle: "Уламжлалт дуу",
+  //     handle: "Найр",
+  //     borderColor: "#ba9a32",
+  //     gradient: "linear-gradient(145deg, #ba9a32, #472913)",
+  //     url: "#traditional-singers",
+  //   },
+  //   {
+  //     image: "/2.JPG",
+  //     title: "Морин хуур",
+  //     subtitle: "Хөгжмийн зэмсэг",
+  //     handle: "Найр",
+  //     borderColor: "#472913",
+  //     gradient: "linear-gradient(180deg, #472913, #ba9a32)",
+  //     url: "#art-performances",
+  //   },
+  //   {
+  //     image: "/3.JPG",
+  //     title: "Бүжиг",
+  //     subtitle: "Уламжлалт бүжиг",
+  //     handle: "Найр",
+  //     borderColor: "#ba9a32",
+  //     gradient: "linear-gradient(225deg, #ba9a32, #472913)",
+  //     url: "#art-performances",
+  //   },
+  //   {
+  //     image: "/4.JPG",
+  //     title: "Хөтөлбөр",
+  //     subtitle: "Багц тоглолт",
+  //     handle: "Найр",
+  //     borderColor: "#472913",
+  //     gradient: "linear-gradient(315deg, #472913, #ba9a32)",
+  //     url: "#package-programs",
+  //   },
+  // ];
 
   const socialItems = [
-    { label: "Email", link: "mailto:info@nair.mn" },
-    { label: "Twitter", link: "https://twitter.com/nairenterainment" },
+    { label: "Facebook", link: "https://www.facebook.com/NAIR.entertainment" },
     {
-      label: "LinkedIn",
-      link: "https://linkedin.com/company/nair-entertainment",
+      label: "Instagram",
+      link: "https://www.instagram.com/nair.entertainment/",
     },
+    { label: "YouTube", link: "https://www.youtube.com/@Nair.entertainment" },
   ];
+
+  // YouTube video data for interactive DomeGallery
+  const youtubeVideoData = [
+    "mCXgzPP1sh8",
+    "Ze4FNHIv8pQ",
+    "lHT7gVDDVHE",
+    "iz7wXlVQjj8",
+    "z25wCzCjoC0",
+    "dKySWwfq1Ig",
+    "jefLAGVStcY",
+    "yOpSK8uIt0M",
+    "cdAiTMhF3OE",
+    "CluFAVM7AWI",
+    "L96c3qf57rA",
+    "wYYroSSVYBY",
+    "Ujt_-t3M0E8",
+    "hzwyuI94mGE",
+    "uhHKChAZI6Y",
+    "Ob8u4zxf7HA",
+    "rdQ-F1tcBK4",
+    "49aZsVS7A5s",
+    "oAer8J5CYZA",
+    "6fkt27_Io40",
+    "dy9Zf_0LGZU",
+    "-GsHnI5gwzU",
+    "1BFmL8SiCTE",
+  ];
+
+  const youtubeThumbnails = youtubeVideoData.map((videoId) => ({
+    src: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+    alt: "Nair Entertainment Performance",
+    videoId: videoId,
+  }));
 
   const [scrollIndicatorOpacity, setScrollIndicatorOpacity] = useState(1);
 
@@ -160,7 +190,7 @@ function App() {
           staggerDuration={0.025}
           splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
           transition={{ type: "spring", damping: 20, stiffness: 200 }}
-          rotationInterval={4000}
+          rotationInterval={3000}
         />
 
         {/* Bouncy Scroll Indicator */}
@@ -435,22 +465,22 @@ function App() {
       </section>
 
       {/* Services Section */}
-      <section
+      {/*<section
         id="services"
         className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 text-cream px-8 py-16"
       >
         <h2 className="text-5xl font-bold mb-12 text-center">Контент</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full">
           {items.map((item, index) => (
-            <SpotlightCard 
+            <SpotlightCard
               key={index}
               className="h-[400px] cursor-pointer hover:scale-105 transition-transform duration-300"
               spotlightColor="rgba(186, 154, 50, 0.3)"
             >
               <div className="relative h-full flex flex-col">
                 <div className="flex-1 mb-4">
-                  <img 
-                    src={item.image} 
+                  <img
+                    src={item.image}
                     alt={item.title}
                     className="w-full h-[250px] object-cover rounded-lg"
                   />
@@ -464,74 +494,250 @@ function App() {
             </SpotlightCard>
           ))}
         </div>
-      </section>
+      </section>*/}
 
-      {/* Traditional Singers Section */}
+      {/* YouTube Videos Section */}
       <section
-        id="traditional-singers"
-        className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-amber-900 to-amber-800 text-cream px-8"
+        id="content"
+        className="min-h-screen bg-cream text-brown relative z-50"
       >
-        <h2 className="text-5xl font-bold mb-12 text-center">
-          Уртын дуучид, Ерөөлчид
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl">
-          <div className="bg-amber-800/50 p-8 rounded-xl backdrop-blur-sm border border-amber-600/30">
-            <h3 className="text-2xl font-semibold mb-4">
-              Морин хуурын тоглолт
-            </h3>
-            <p className="text-amber-200">
-              Traditional horsehead fiddle performances featuring ancient
-              melodies.
-            </p>
-          </div>
-          <div className="bg-amber-800/50 p-8 rounded-xl backdrop-blur-sm border border-amber-600/30">
-            <h3 className="text-2xl font-semibold mb-4">Уртын дууны тоглолт</h3>
-            <p className="text-amber-200">
-              Long song performances showcasing Mongolia's vocal traditions.
-            </p>
-          </div>
-          <div className="bg-amber-800/50 p-8 rounded-xl backdrop-blur-sm border border-amber-600/30">
-            <h3 className="text-2xl font-semibold mb-4">
-              Ерөөлийн дууны тоглолт
-            </h3>
-            <p className="text-amber-200">
-              Blessing song performances for special occasions and ceremonies.
-            </p>
-          </div>
+        <div className="text-center py-16 px-8">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-brown">
+            Бидний{" "}
+            <a href="">
+              You
+              <span className="bg-red-600 rounded-xl ml-1 p-1 text-white">
+                Tube
+              </span>
+            </a>
+            -р зочлоорой!{" "}
+          </h2>
+          <p className="text-xl text-brown/80 max-w-2xl mx-auto">
+            Манай тоглолт, хөтөлбөрүүдийг үзээрэй
+          </p>
+        </div>
+
+        <div className="h-[700px] w-full">
+          <DomeGallery
+            images={youtubeThumbnails}
+            fit={1.2}
+            minRadius={600}
+            maxRadius={900}
+            dragSensitivity={15}
+            maxVerticalRotationDeg={0}
+            dragDampening={1.5}
+            grayscale={false}
+            imageBorderRadius="20px"
+            openedImageBorderRadius="20px"
+            overlayBlurColor="#060010"
+            autoRotate={true}
+            autoRotateSpeed={0.1}
+          />
         </div>
       </section>
 
       {/* Content Section */}
 
-      {/* Articles Section */}
-      <section
-        id="articles"
-        className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-rose-900 to-rose-800 text-cream px-8"
+      {/* Luxury Footer Section */}
+      <footer
+        id="footer"
+        className="relative min-h-screen text-cream overflow-hidden"
       >
-        <h2 className="text-5xl font-bold mb-12 text-center">Нийтлэл</h2>
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl">
-          <div className="bg-rose-800/50 p-8 rounded-xl backdrop-blur-sm border border-rose-600/30">
-            <h3 className="text-2xl font-semibold mb-4">Соёлын нийтлэл</h3>
-            <p className="text-rose-200">
-              Articles exploring Mongolian cultural heritage and traditions.
-            </p>
+        {/* ColorBends Background */}
+        <div className="absolute inset-0 w-full h-full bg-black">
+          <ColorBends
+            colors={["#ba9a32", "#57b7ff", "#472913", "#0000ff"]}
+            rotation={90}
+            autoRotate={1}
+            speed={0.2}
+            scale={2}
+            frequency={1.2}
+            warpStrength={1}
+            mouseInfluence={0.8}
+            parallax={2}
+            noise={0.08}
+          />
+        </div>
+
+        {/* Accessibility Overlay */}
+        <div className="absolute inset-0 bg-black/60 z-5"></div>
+
+        {/* Content Overlay */}
+        <div className="relative z-10 min-h-screen flex flex-col">
+          {/* Main Footer Content */}
+          <div className="flex-1 flex items-center justify-center px-6 py-16">
+            <div className="max-w-7xl mx-auto w-full">
+              <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                {/* Left Side - Brand & Mission */}
+                <div className="space-y-8 lg:space-y-12">
+                  <div>
+                    <img
+                      src="/logo.jpg"
+                      alt="НАЙР энтертайнмент"
+                      className="h-[100px] lg:h-[150px] w-auto object-contain mb-6"
+                    />
+                    <div className="h-1 w-24 bg-cream rounded-full"></div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <p className="text-lg lg:text-xl text-cream/90 leading-relaxed">
+                      Үндэсний найрны цогц үйлчилгээ үзүүлэгч компани
+                    </p>
+                    <p className="text-base lg:text-lg text-cream/80 leading-relaxed">
+                      Монгол соёлын баялаг өвийг орчин үеийн хэлбэрээр
+                      дамжуулан, бүх насны үзэгчдэд гайхамшигтай туршлага
+                      бэлтгэж байна.
+                    </p>
+                  </div>
+
+                  {/* Social Links */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-cream uppercase tracking-wider">
+                      Бидэнтэй нэгдээрэй
+                    </h3>
+                    <div className="flex flex-wrap gap-4">
+                      <a
+                        href="https://www.facebook.com/NAIR.entertainment"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-3 px-6 py-3 bg-cream/10 backdrop-blur-sm rounded-full border border-cream/20 hover:bg-cream/20 transition-all duration-300 hover:scale-105"
+                      >
+                        <span className="text-cream group-hover:text-brown group-hover:bg-cream group-hover:px-2 group-hover:py-1 group-hover:rounded transition-all">
+                          Facebook
+                        </span>
+                      </a>
+                      <a
+                        href="https://www.instagram.com/nair.entertainment/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-3 px-6 py-3 bg-cream/10 backdrop-blur-sm rounded-full border border-cream/20 hover:bg-cream/20 transition-all duration-300 hover:scale-105"
+                      >
+                        <span className="text-cream group-hover:text-brown group-hover:bg-cream group-hover:px-2 group-hover:py-1 group-hover:rounded transition-all">
+                          Instagram
+                        </span>
+                      </a>
+                      <a
+                        href="https://www.youtube.com/@Nair.entertainment"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-3 px-6 py-3 bg-cream/10 backdrop-blur-sm rounded-full border border-cream/20 hover:bg-cream/20 transition-all duration-300 hover:scale-105"
+                      >
+                        <span className="text-cream group-hover:text-brown group-hover:bg-cream group-hover:px-2 group-hover:py-1 group-hover:rounded transition-all">
+                          YouTube
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Side - Contact & Services */}
+                <div className="space-y-8 lg:space-y-12">
+                  {/* Contact Information */}
+                  <div className="bg-cream/10 backdrop-blur-lg rounded-3xl p-8 lg:p-10 border border-cream/20 shadow-2xl">
+                    <h3 className="text-2xl lg:text-3xl font-bold mb-6 text-cream">
+                      Холбоо барих
+                    </h3>
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-4">
+                        <div className="w-6 h-6 rounded-full bg-cream/20 flex items-center justify-center mt-1">
+                          <div className="w-2 h-2 rounded-full bg-cream"></div>
+                        </div>
+                        <div>
+                          <p className="text-cream font-medium">Утас</p>
+                          <p className="text-cream/80">+976 7600-4455</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <div className="w-6 h-6 rounded-full bg-cream/20 flex items-center justify-center mt-1">
+                          <div className="w-2 h-2 rounded-full bg-cream"></div>
+                        </div>
+                        <div>
+                          <p className="text-cream font-medium">И-мэйл</p>
+                          <p className="text-cream/80">info@nair.mn</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <div className="w-6 h-6 rounded-full bg-cream/20 flex items-center justify-center mt-1">
+                          <div className="w-2 h-2 rounded-full bg-cream"></div>
+                        </div>
+                        <div>
+                          <p className="text-cream font-medium">Хаяг</p>
+                          <p className="text-cream/80">
+                            Улаанбаатар хот, Монгол улс
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Services Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-cream/10 backdrop-blur-lg rounded-2xl p-6 border border-cream/20 hover:bg-cream/20 transition-all duration-300 group cursor-pointer">
+                      <h4 className="text-lg font-semibold mb-2 text-cream group-hover:text-brown transition-colors">
+                        Багц хөтөлбөр
+                      </h4>
+                      <p className="text-cream/80 text-sm">
+                        Уламжлалт урлагийн цогц тоглолт
+                      </p>
+                    </div>
+                    <div className="bg-cream/10 backdrop-blur-lg rounded-2xl p-6 border border-cream/20 hover:bg-cream/20 transition-all duration-300 group cursor-pointer">
+                      <h4 className="text-lg font-semibold mb-2 text-cream group-hover:text-brown transition-colors">
+                        Урлагийн тоглолт
+                      </h4>
+                      <p className="text-cream/80 text-sm">
+                        Хөгжим, бүжиг, уламжлалт урлаг
+                      </p>
+                    </div>
+                    <div className="bg-cream/10 backdrop-blur-lg rounded-2xl p-6 border border-cream/20 hover:bg-cream/20 transition-all duration-300 group cursor-pointer">
+                      <h4 className="text-lg font-semibold mb-2 text-cream group-hover:text-brown transition-colors">
+                        Үйлчилгээ
+                      </h4>
+                      <p className="text-cream/80 text-sm">
+                        Тусгай захиалгын үйлчилгээ
+                      </p>
+                    </div>
+                    <div className="bg-cream/10 backdrop-blur-lg rounded-2xl p-6 border border-cream/20 hover:bg-cream/20 transition-all duration-300 group cursor-pointer">
+                      <h4 className="text-lg font-semibold mb-2 text-cream group-hover:text-brown transition-colors">
+                        Контент
+                      </h4>
+                      <p className="text-cream/80 text-sm">
+                        Цахим контент үүсгэлт
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="bg-rose-800/50 p-8 rounded-xl backdrop-blur-sm border border-rose-600/30">
-            <h3 className="text-2xl font-semibold mb-4">Урлагийн нийтлэл</h3>
-            <p className="text-rose-200">
-              In-depth articles about traditional and contemporary Mongolian art
-              forms.
-            </p>
-          </div>
-          <div className="bg-rose-800/50 p-8 rounded-xl backdrop-blur-sm border border-rose-600/30">
-            <h3 className="text-2xl font-semibold mb-4">Хэвлэлийн мэдээ</h3>
-            <p className="text-rose-200">
-              Latest news and press releases about our activities and
-              achievements.
-            </p>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-cream/20">
+            <div className="max-w-7xl mx-auto px-6 py-8">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="flex items-center gap-4">
+                  <p className="text-cream/70 text-sm">
+                    © 2024 НАЙР энтертайнмент. Бүх эрх хуулиар хамгаалагдсан.
+                  </p>
+                </div>
+                <div className="flex items-center gap-6">
+                  <a
+                    href="#"
+                    className="text-cream/70 hover:text-cream text-sm transition-colors"
+                  >
+                    Нууцлалын бодлого
+                  </a>
+                  <a
+                    href="#"
+                    className="text-cream/70 hover:text-cream text-sm transition-colors"
+                  >
+                    Үйлчилгээний нөхцөл
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </footer>
     </>
   );
 }
