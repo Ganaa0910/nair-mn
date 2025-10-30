@@ -10,7 +10,6 @@ import DomeGallery from "./components/sections/dome-gallery.tsx";
 import TiltedCard from "./components/cards/tilted-card.tsx";
 import StackedCard from "./components/cards/stacked-card.tsx";
 
-import Ballpit from "./components/backgrounds/ball-pit.tsx";
 import ColorBends from "./components/backgrounds/light-bend.tsx";
 function App() {
   const menuItems = [
@@ -447,15 +446,6 @@ function App() {
 
         {/* Animated Background Section */}
         <div className="relative min-h-[800px] overflow-hidden">
-          <Ballpit
-            count={80}
-            gravity={0}
-            friction={0.995}
-            wallBounce={0.95}
-            followCursor={false}
-            colors={[0x3b82f6, 0x1e40af, 0xba9a32]}
-          />
-
           {/* Cards overlay */}
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center">
