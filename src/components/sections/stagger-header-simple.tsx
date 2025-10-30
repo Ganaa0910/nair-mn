@@ -585,11 +585,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
             aria-expanded={open}
             aria-controls="staggered-menu-panel"
             onClick={toggleMenu}
-            onTouchStart={(e) => {
-              // Prevent iOS double-tap zoom
-              e.preventDefault();
-              toggleMenu();
-            }}
             type="button"
             style={{
               WebkitTapHighlightColor: 'transparent',

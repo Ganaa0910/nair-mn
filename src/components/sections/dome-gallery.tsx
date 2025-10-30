@@ -200,16 +200,23 @@ export default function DomeGallery({
   const lastDragEndAt = useRef(0);
 
   const scrollLockedRef = useRef(false);
+  const savedScrollPosition = useRef(0);
+  
   const lockScroll = useCallback(() => {
     if (scrollLockedRef.current) return;
     scrollLockedRef.current = true;
+    savedScrollPosition.current = window.scrollY;
+    document.body.style.top = `-${savedScrollPosition.current}px`;
     document.body.classList.add("dg-scroll-lock");
   }, []);
+  
   const unlockScroll = useCallback(() => {
     if (!scrollLockedRef.current) return;
     if (rootRef.current?.getAttribute("data-enlarging") === "true") return;
     scrollLockedRef.current = false;
     document.body.classList.remove("dg-scroll-lock");
+    document.body.style.top = '';
+    window.scrollTo(0, savedScrollPosition.current);
   }, []);
 
   const items = useMemo(() => buildItems(images, segments), [images, segments]);
@@ -379,23 +386,31 @@ export default function DomeGallery({
   useGesture(
     {
       onDragStart: ({ event }) => {
-        console.log('onDragStart triggered');
         if (focusedElRef.current) return;
-        stopInertia();
-
+        
         const evt = event as PointerEvent;
+        const targetElement = evt.target as Element;
+        const isItemImage = targetElement.closest('.item__image');
+        
+        // Don't start dragging if user is clicking on an item image
+        if (isItemImage) {
+          return;
+        }
+        
+        stopInertia();
         pointerTypeRef.current = (evt.pointerType as any) || "mouse";
-        if (pointerTypeRef.current === "touch") evt.preventDefault();
-        if (pointerTypeRef.current === "touch") lockScroll();
+        
+        if (pointerTypeRef.current === "touch") {
+          evt.preventDefault();
+          lockScroll();
+        }
+        
         draggingRef.current = true;
         cancelTapRef.current = false;
         movedRef.current = false;
         startRotRef.current = { ...rotationRef.current };
         startPosRef.current = { x: evt.clientX, y: evt.clientY };
-        const potential = (evt.target as Element).closest?.(
-          ".item__image",
-        ) as HTMLElement | null;
-        tapTargetRef.current = potential || null;
+        tapTargetRef.current = null;
       },
       onDrag: ({
         event,
@@ -404,7 +419,6 @@ export default function DomeGallery({
         direction: dirArr = [0, 0],
         movement,
       }) => {
-        console.log('onDrag triggered', { last, movement });
         if (
           focusedElRef.current ||
           !draggingRef.current ||
@@ -413,14 +427,20 @@ export default function DomeGallery({
           return;
 
         const evt = event as PointerEvent;
-        if (pointerTypeRef.current === "touch") evt.preventDefault();
+        
+        if (pointerTypeRef.current === "touch") {
+          evt.preventDefault();
+        }
 
         const dxTotal = evt.clientX - startPosRef.current.x;
         const dyTotal = evt.clientY - startPosRef.current.y;
 
         if (!movedRef.current) {
           const dist2 = dxTotal * dxTotal + dyTotal * dyTotal;
-          if (dist2 > 16) movedRef.current = true;
+          const moveThreshold = pointerTypeRef.current === "touch" ? 16 : 10;
+          if (dist2 > moveThreshold) {
+            movedRef.current = true;
+          }
         }
 
         const nextX = clamp(
@@ -438,17 +458,6 @@ export default function DomeGallery({
 
         if (last) {
           draggingRef.current = false;
-          let isTap = false;
-
-          if (startPosRef.current) {
-            const dx = evt.clientX - startPosRef.current.x;
-            const dy = evt.clientY - startPosRef.current.y;
-            const dist2 = dx * dx + dy * dy;
-            const TAP_THRESH_PX = pointerTypeRef.current === "touch" ? 10 : 6;
-            if (dist2 <= TAP_THRESH_PX * TAP_THRESH_PX) {
-              isTap = true;
-            }
-          }
 
           let [vMagX, vMagY] = velArr;
           const [dirX, dirY] = dirArr;
@@ -456,7 +465,6 @@ export default function DomeGallery({
           let vy = vMagY * dirY;
 
           if (
-            !isTap &&
             Math.abs(vx) < 0.001 &&
             Math.abs(vy) < 0.001 &&
             Array.isArray(movement)
@@ -466,19 +474,11 @@ export default function DomeGallery({
             vy = (my / dragSensitivity) * 0.02;
           }
 
-          if (!isTap && (Math.abs(vx) > 0.005 || Math.abs(vy) > 0.005)) {
+          if (Math.abs(vx) > 0.005 || Math.abs(vy) > 0.005) {
             startInertia(vx, vy);
           }
+          
           startPosRef.current = null;
-          cancelTapRef.current = !isTap;
-
-          if (isTap && tapTargetRef.current && !focusedElRef.current) {
-            openItemFromElement(tapTargetRef.current);
-          }
-          tapTargetRef.current = null;
-
-          if (cancelTapRef.current)
-            setTimeout(() => (cancelTapRef.current = false), 120);
           if (movedRef.current) lastDragEndAt.current = performance.now();
           movedRef.current = false;
           if (pointerTypeRef.current === "touch") unlockScroll();
@@ -638,6 +638,16 @@ export default function DomeGallery({
     if (videoId) {
       window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
       return;
+    }
+    
+    // Prevent any scroll to top behavior
+    if (typeof window !== 'undefined') {
+      const currentScrollY = window.scrollY;
+      setTimeout(() => {
+        if (window.scrollY !== currentScrollY) {
+          window.scrollTo(0, currentScrollY);
+        }
+      }, 0);
     }
     
     // Otherwise, proceed with the normal image enlargement
@@ -936,20 +946,15 @@ export default function DomeGallery({
                     tabIndex={0}
                     aria-label={it.alt || "Open image"}
                     onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      
                       if (draggingRef.current) return;
                       if (movedRef.current) return;
-                      if (performance.now() - lastDragEndAt.current < 80)
+                      if (performance.now() - lastDragEndAt.current < 50)
                         return;
                       if (openingRef.current) return;
-                      openItemFromElement(e.currentTarget);
-                    }}
-                    onPointerUp={(e) => {
-                      if (e.pointerType !== "touch") return;
-                      if (draggingRef.current) return;
-                      if (movedRef.current) return;
-                      if (performance.now() - lastDragEndAt.current < 80)
-                        return;
-                      if (openingRef.current) return;
+                      
                       openItemFromElement(e.currentTarget);
                     }}
                     style={{
